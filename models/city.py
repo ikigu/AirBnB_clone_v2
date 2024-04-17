@@ -20,8 +20,6 @@ class City(BaseModel, Base):
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
 
-        state = relationship(
-            "State", back_populates="cities")
     else:
         state_id = ""
         name = ""

@@ -2,7 +2,7 @@
 """ Place Module for HBNB project """
 
 import os
-from models import storage
+import models
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy import ForeignKey, Table
@@ -46,7 +46,7 @@ class Place(BaseModel, Base):
 
         @property
         def reviews(self):
-            all_objects = storage.all()
+            all_objects = models.storage.all()
             filtered_objects = {}
 
             for k, v in all_objects.items():

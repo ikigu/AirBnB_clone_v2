@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 
-from models import storage
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
+import models
 
 
 class State(BaseModel, Base):
@@ -22,7 +22,7 @@ class State(BaseModel, Base):
         @property
         def cities(self):
             """FileStorage cities getter attribute"""
-            all_objects = storage.all()
+            all_objects = models.storage.all()
 
             all_cities = []
 
