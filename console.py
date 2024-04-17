@@ -132,9 +132,15 @@ class HBNBCommand(cmd.Cmd):
 
         kwargs = {}
 
+        params = params[1:]
+
         for arg in params:
             if '=' in arg:
                 key, value = arg.split('=')
+
+                if ' ' in value:
+                    pass
+
                 value = eval(value)
 
                 if isinstance(value, str):
