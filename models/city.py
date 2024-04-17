@@ -4,7 +4,8 @@
 
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import mapped_column, relationship
+from sqlalchemy.orm import relationship
+import os
 
 
 class City(BaseModel, Base):
@@ -12,9 +13,12 @@ class City(BaseModel, Base):
     The city class, contains state ID and name
     """
 
-    __tablename__ = 'cities'
+    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
+        __tablename__ = 'cities'
 
-    name = Column(String(128), nullabe=False)
-    state_id = mapped_column(ForeignKey(
-        "states.id", ondelete="CASCADE"), Column(60), nullable=False)
-    state = relationship("State", back_populates="children")
+        name = Column(String(128), nullable=False)
+        state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+        state = relationship("State", back_populates="cities")
+
+    state_id = ""
+    name = ""

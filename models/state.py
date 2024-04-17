@@ -5,18 +5,17 @@ from models import storage
 from models.base_model import Base, BaseModel
 from sqlalchemy import create_engine, Column, Integer, String, Sequence
 from sqlalchemy.orm import relationship
+import os
 
 
 class State(BaseModel, Base):
     """ State class """
 
-    __tablename__ = 'states'
-
-    name = Column(String(128), nullable=False)
-
-    # Todo: For DBStorage
-    cities = relationship("City", back_populates="parent",
-                          cascade="all, delete", passive_deletes=True)
+    if os.environ['HBNB_TYPE_STORAGE'] == 'db':
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
+        cities = relationship("City", back_populates="states",
+                              cascade="all, delete", passive_deletes=True)
 
     # Todo: For FileStorage - should be private attribute
     @property
