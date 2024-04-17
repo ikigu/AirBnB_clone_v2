@@ -4,7 +4,8 @@
 import os
 from models import storage
 from models.base_model import Base, BaseModel
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float
+from sqlalchemy import ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 
@@ -24,6 +25,12 @@ class Place(BaseModel, Base):
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
         reviews = relationship('Review', backref='Place', cascade='delete')
+        place_amenity = Table('place_amenity', Base.metadata,
+                              Column('place_id', String(60),
+                                     ForeignKey('places.id'),
+                                     nullable=False)),
+        Column('amenity_id', String(60), ForeignKey(
+            'amenities.id'), nullable=False)
     else:
         city_id = ""
         user_id = ""
