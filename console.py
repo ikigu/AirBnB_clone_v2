@@ -137,8 +137,8 @@ class HBNBCommand(cmd.Cmd):
                 key, value = arg.split('=')
                 kwargs[key] = eval(value)
 
-        if kwargs == {}:
-            return
+        # if kwargs == {}:
+        #     return
 
         new_instance = HBNBCommand.classes[class_name](**kwargs)
         storage.save()
