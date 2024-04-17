@@ -4,7 +4,6 @@
 import os
 
 HBNB_TYPE_STORAGE = os.environ['HBNB_TYPE_STORAGE']
-print(HBNB_TYPE_STORAGE)
 
 if HBNB_TYPE_STORAGE == 'db':
     from models.engine.db_storage import DBStorage
