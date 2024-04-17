@@ -146,7 +146,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         new_instance = HBNBCommand.classes[class_name](**kwargs)
-        storage.save()
+        # storage.save()
 
         # params[0] = params[0] + f' {new_instance.id}'
 
