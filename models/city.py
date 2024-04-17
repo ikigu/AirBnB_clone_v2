@@ -3,6 +3,7 @@
 
 
 from models.base_model import Base, BaseModel
+from models.state import State
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
 import os
@@ -18,7 +19,11 @@ class City(BaseModel, Base):
 
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
-        state = relationship("State", back_populates="cities")
+        state = relationship("State", back_populates="children")
+    else:
+        state_id = ""
+        name = ""
 
-    state_id = ""
-    name = ""
+    def __init__(self, *args, **kwargs):
+        """Initialize State"""
+        super().__init__(*args, **kwargs)
