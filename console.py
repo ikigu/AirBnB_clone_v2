@@ -135,10 +135,15 @@ class HBNBCommand(cmd.Cmd):
         for arg in params:
             if '=' in arg:
                 key, value = arg.split('=')
-                kwargs[key] = eval(value)
+                value = eval(value)
 
-        # if kwargs == {}:
-        #     return
+                if isinstance(value, str):
+                    value = value.replace('_', ' ')
+
+                kwargs[key] = value
+
+        if kwargs == {}:
+            return
 
         new_instance = HBNBCommand.classes[class_name](**kwargs)
         storage.save()
