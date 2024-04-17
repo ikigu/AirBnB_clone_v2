@@ -11,6 +11,8 @@ import uuid
 
 if os.environ['HBNB_TYPE_STORAGE'] == 'db':
     Base = declarative_base()
+else:
+    Base = object
 
 
 class BaseModel:

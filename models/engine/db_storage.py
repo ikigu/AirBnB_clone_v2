@@ -24,10 +24,19 @@ HBNB_MYSQL_DB = os.environ['HBNB_MYSQL_DB']
 HBNB_ENV = os.environ['HBNB_ENV']
 
 
-class DBStorage():
+class DBStorage:
     """
     Sets up DBStorage
     """
+
+    __classes = {
+        'Amenity': Amenity,
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'User': User,
+    }
 
     __engine = None
     __session = None
@@ -63,6 +72,9 @@ class DBStorage():
             cls: The specific class to query objects of
         """
 
+        if self.__session is None:
+            self.reload()
+
         all_objects = {}
 
         if cls is not None:
@@ -73,25 +85,20 @@ class DBStorage():
 
             if filtered_objects is not None:
                 for obj in filtered_objects:
-                    object_key = obj.__class__ + '.' + obj.id
+                    object_key = obj.__class__.__name__ + '.' + obj.id
 
                     all_objects[object_key] = obj
         else:
-            amenities = self.__session.query(Amenity).all()
-            cities = self.__session.query(City).all()
-            places = self.__session.query(Place).all()
-            reviews = self.__session.query(Review).all()
-            states = self.__session.query(State).all()
-            users = self.__session.query(User).all()
+            # for k, v in self.__classes.items():
+            #     for obj in self.__session.query(self.__classes[k]):
+            #         all_objects[obj.__class__.__name__ + '.' + obj.id] = obj
 
-            queried_objs = [amenities, cities, places, reviews, states, users]
-
-            for objects in queried_objs:
-                if objects is not None:
-                    for obj in objects:
-                        object_key = obj.__class__ + '.' + obj.id
-
-                        all_objects[object_key] = obj
+            all_objects = self.__session.query(State).all()
+            all_objects.extend(self.__session.query(City).all())
+            all_objects.extend(self.__session.query(User).all())
+            all_objects.extend(self.__session.query(Place).all())
+            all_objects.extend(self.__session.query(Review).all())
+            all_objects.extend(self.__session.query(Amenity).all())
 
         return all_objects
 
@@ -126,10 +133,12 @@ class DBStorage():
 
     def reload(self):
         """
-        Creates all tables in the database.
+        Creates all tables in the database
+
+        Args:
+            self: represents instance of the class
         """
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(
             bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(session_factory)
-        self.__session = Session()
+        self.__session = scoped_session(session_factory)
