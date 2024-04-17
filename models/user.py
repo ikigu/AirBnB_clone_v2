@@ -2,11 +2,11 @@
 """This module defines a class User"""
 
 import os
-from models.base_model import BaseModel
-from sqlalchemy import Column, String, ForeignKey
+from models.base_model import Base, BaseModel
+from sqlalchemy import Column, String
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """This class defines a user by various attributes"""
 
     if os.environ['HBNB_TYPE_STORAGE'] == 'db':
