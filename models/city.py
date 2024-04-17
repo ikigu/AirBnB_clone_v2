@@ -19,8 +19,9 @@ class City(BaseModel, Base):
 
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
+
         state = relationship(
-            "State", cascade="all", backref="cities")
+            "State", back_populates="cities")
     else:
         state_id = ""
         name = ""
@@ -28,3 +29,6 @@ class City(BaseModel, Base):
     def __init__(self, *args, **kwargs):
         """Initialize State"""
         super().__init__(*args, **kwargs)
+
+
+# State.cities = relationship("City", order_by=City.id, back_populates='state')

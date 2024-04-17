@@ -64,4 +64,4 @@ class Place(BaseModel, Base):
             args: positional arguments
             kwargs: keyword arguments
         """
-        super().__init__(self, *args, **kwargs)
+        super().__init__(*args, **kwargs)

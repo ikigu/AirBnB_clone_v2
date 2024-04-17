@@ -30,4 +30,4 @@ class Review(BaseModel, Base):
             kwargs: key-word arguments
         """
 
-        super().__init__(self, args, kwargs)
+        super().__init__(*args, **kwargs)

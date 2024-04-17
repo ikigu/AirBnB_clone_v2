@@ -89,16 +89,9 @@ class DBStorage:
 
                     all_objects[object_key] = obj
         else:
-            # for k, v in self.__classes.items():
-            #     for obj in self.__session.query(self.__classes[k]):
-            #         all_objects[obj.__class__.__name__ + '.' + obj.id] = obj
-
-            all_objects = self.__session.query(State).all()
-            all_objects.extend(self.__session.query(City).all())
-            all_objects.extend(self.__session.query(User).all())
-            all_objects.extend(self.__session.query(Place).all())
-            all_objects.extend(self.__session.query(Review).all())
-            all_objects.extend(self.__session.query(Amenity).all())
+            for k, v in self.__classes.items():
+                for obj in self.__session.query(self.__classes[k]):
+                    all_objects[obj.__class__.__name__ + '.' + obj.id] = obj
 
         return all_objects
 
