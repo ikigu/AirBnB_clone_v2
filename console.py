@@ -130,23 +130,33 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        new_instance = HBNBCommand.classes[class_name]()
+        kwargs = {}
+
+        for arg in params:
+            if '=' in arg:
+                key, value = arg.split('=')
+                kwargs[key] = eval(value)
+
+        if kwargs == {}:
+            return
+
+        new_instance = HBNBCommand.classes[class_name](**kwargs)
         storage.save()
 
-        params[0] = params[0] + f' {new_instance.id}'
+        # params[0] = params[0] + f' {new_instance.id}'
 
-        for i in range(1, len(params)):
-            item_to_update = {}
-            key, value = params[i].split('=')
+        # for i in range(1, len(params)):
+        #     item_to_update = {}
+        #     key, value = params[i].split('=')
 
-            value = eval(value)
+        #     value = eval(value)
 
-            if isinstance(value, str):
-                value = value.replace('_', ' ')
+        #     if isinstance(value, str):
+        #         value = value.replace('_', ' ')
 
-            item_to_update[key] = value
+        #     item_to_update[key] = value
 
-            self.do_update(params[0] + ' ' + str(item_to_update))
+        #     self.do_update(params[0] + ' ' + str(item_to_update))
 
         print(new_instance.id)
         storage.save()
@@ -231,11 +241,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(print_list)
