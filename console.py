@@ -115,7 +115,9 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
+        """Create an object of any class"""
+
+        # Todo: Ignore params that don't meet the criteria
 
         if not args:
             print("** class name missing **")
