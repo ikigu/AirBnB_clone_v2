@@ -8,9 +8,11 @@ then
 	sudo apt-get install -y nginx;
 fi
 
-sudo mkdir -p /data/web_static/releases/
-sudo mkdir /data/web_static/shared/
-sudo mkdir /data/web_static/releases/test/
+[ -d /data/ ] || sudo mkdir /data/
+[ -d /data/web_static/ ] || sudo mkdir /data/web_static/
+[ -d /data/web_static/releases/ ] || sudo mkdir /data/web_static/releases/
+[ -d /data/web_static/shared/ ] || sudo mkdir /data/web_static/shared/
+[ -d /data/web_static/releases/test/ ] || sudo mkdir /data/web_static/releases/test/
 
 html_content='
 <!DOCTYPE html>
