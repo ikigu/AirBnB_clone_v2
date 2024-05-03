@@ -49,13 +49,8 @@ source_dir="/data/web_static/releases/test"
 rm -f "$target_dir" && sudo ln -s "$source_dir" "$target_dir"
 sudo chown -R ikigu:ikigu /data/
 
-new_config="
-	server_name _;
-
-	location /hbnb_static/ {
-		alias /data/web_static/current/;
-		index index.html index.htm;
-	}
-"
+new_config="\tserver_name _;\n\n\tlocation \/hbnb_static\/ \{\n\t\talias \/data\/web_static\/current\/;\n\t\tindex index.html index.htm;\n\t\}\n"
 
 sudo sed -i "s/\tserver_name _;/$new_config/" /etc/nginx/sites-enabled/default
+
+sudo service nginx restart
