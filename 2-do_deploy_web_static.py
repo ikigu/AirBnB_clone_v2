@@ -74,5 +74,3 @@ def do_deploy(archive_path):
     # Create new symbolic link, current->
     if sudo(f'ln -s {releases}/{archive_path[9:-4]} {current}').failed:
         return False
-
-    sudo('service nginx restart')
