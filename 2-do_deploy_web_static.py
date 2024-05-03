@@ -9,6 +9,8 @@ from fabric.api import local, put, run, sudo
 from fabric.state import env
 from os import path
 
+env.hosts = ['100.26.136.10', '54.236.52.202']
+
 
 def do_pack():
     """
@@ -32,12 +34,10 @@ def do_deploy(archive_path):
     if not path.exists(archive_path):
         return False
 
-    env.hosts = ['100.26.136.10', '54.236.52.202']
-
     current = '/data/web_static/current'
     releases = '/data/web_static/releases'
 
-    if sudo(archive_path, '/tmp/').failed:
+    if put(archive_path, '/tmp/').failed:
         return False
 
     if sudo(f'mkdir -p {releases}/{archive_path[:-4]}').failed:
