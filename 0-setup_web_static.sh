@@ -18,7 +18,7 @@ html_content='
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nginx Confi Status</title>
+  <title>Nginx Config Status</title>
   <style>
     body {
       display: flex; 
@@ -47,7 +47,7 @@ target_dir="/data/web_static/current"
 source_dir="/data/web_static/releases/test"
 
 rm -f "$target_dir" && sudo ln -s "$source_dir" "$target_dir"
-sudo chown -R ikigu:ikigu /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 new_config="\tserver_name _;\n\n\tlocation \/hbnb_static\/ \{\n\t\talias \/data\/web_static\/current\/;\n\t\tindex index.html index.htm;\n\t\}\n"
 
