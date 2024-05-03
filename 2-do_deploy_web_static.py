@@ -10,6 +10,8 @@ from fabric.state import env
 from os import path
 
 env.hosts = ['100.26.136.10', '54.236.52.202']
+env.user = 'ubuntu'
+env.key_filename = "~/.ssh/id_rsa"
 
 
 def do_pack():
@@ -51,6 +53,16 @@ def do_deploy(archive_path):
     ).failed:
         return False
 
+    # Move all the files in uncompressed web_static folder to parent folder
+    new_release_folder = f'{releases}/{archive_path[9:-4]}'
+    web_static_files = f'{new_release_folder}/web_static/*'
+    if sudo(f'mv {web_static_files} {new_release_folder}').failed:
+        return False
+
+    # Delete the web_static folder (result of uncompressing)
+    if sudo(f'rm -rf {releases}/{archive_path[9:-4]}/web_static').failed:
+        return False
+
     # Delete the archive from /tmp
     if sudo(f'rm /tmp/{archive_path[9:]}').failed:
         return False
@@ -60,5 +72,7 @@ def do_deploy(archive_path):
         return False
 
     # Create new symbolic link, current->
-    if sudo(f'ln -s {releases}/{archive_path[:-4]} {current}').failed:
+    if sudo(f'ln -s {releases}/{archive_path[9:-4]} {current}').failed:
         return False
+
+    sudo('service nginx restart')
