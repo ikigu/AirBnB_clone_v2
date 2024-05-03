@@ -4,9 +4,7 @@
 Compresses web_static files and send to the web server
 """
 
-from datetime import datetime
-from fabric.api import local, put, run, sudo
-from fabric.state import env
+from fabric.api import put, sudo, env
 from os import path
 
 env.hosts = ['100.26.136.10', '54.236.52.202']
