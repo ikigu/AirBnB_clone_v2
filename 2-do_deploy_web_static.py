@@ -37,20 +37,28 @@ def do_deploy(archive_path):
     current = '/data/web_static/current'
     releases = '/data/web_static/releases'
 
+    # Upload the archive to the /tmp/ directory of the web server
     if put(archive_path, '/tmp/').failed:
         return False
 
-    if sudo(f'mkdir -p {releases}/{archive_path[:-4]}').failed:
+    # Create folder to uncompress archive to
+    if sudo(f'mkdir -p {releases}/{archive_path[9:-4]}/').failed:
         return False
 
-    if sudo(f'tar -xzf /tmp/{archive_path} -C {releases}/{archive_path[:-4]}').failed:
+    # Uncompress the archive to the folder created above
+    if sudo(
+        f'tar -xzf /tmp/{archive_path[9:]} -C {releases}/{archive_path[9:-4]}/'
+    ).failed:
         return False
 
-    if sudo(f'rm /tmp/{archive_path}').failed:
+    # Delete the archive from /tmp
+    if sudo(f'rm /tmp/{archive_path[9:]}').failed:
         return False
 
+    # Delete the symbolic link /data/web_static/current
     if sudo(f'rm {current}').failed:
         return False
 
+    # Create new symbolic link, current->
     if sudo(f'ln -s {releases}/{archive_path[:-4]} {current}').failed:
         return False
