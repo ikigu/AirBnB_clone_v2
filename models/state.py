@@ -26,8 +26,11 @@ class State(BaseModel, Base):
             all_cities = []
 
             for k, v in all_objects.items():
-                if all_objects[k].state_id == self.id:
-                    all_cities.append(all_objects[k])
+                try:
+                    if all_objects[k].state_id == self.id:
+                        all_cities.append(all_objects[k])
+                except AttributeError:
+                    pass
 
             return all_cities
 
