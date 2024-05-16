@@ -21,7 +21,11 @@ HBNB_MYSQL_USER = os.environ['HBNB_MYSQL_USER']
 HBNB_MYSQL_PWD = os.environ['HBNB_MYSQL_PWD']
 HBNB_MYSQL_HOST = os.environ['HBNB_MYSQL_HOST']
 HBNB_MYSQL_DB = os.environ['HBNB_MYSQL_DB']
-HBNB_ENV = os.environ['HBNB_ENV']
+
+try:
+    HBNB_ENV = os.environ['HBNB_ENV']
+except KeyError:
+    HBNB_ENV = None
 
 
 class DBStorage:
