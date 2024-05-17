@@ -33,14 +33,15 @@ app = Flask(__name__)
 
 @app.route("/states_list", strict_slashes=False)
 def states_list():
+    """Gets all states and passes them to a template"""
     states = storage.all(State)
-    states_list = []
+    return render_template("7-states_list.html", states=states)
 
-    for k, v in states.items():
-        states_list.append(v)
 
-    # Todo: Make sure states_list is sorted according to name A->Z
-    return render_template("7-states_list.html", states=states_list)
+@app.teardown_appcontext
+def teardwon(self):
+    """Destroys SQLAlchemy session"""
+    storage.close()
 
 
 if __name__ == "__main__":
