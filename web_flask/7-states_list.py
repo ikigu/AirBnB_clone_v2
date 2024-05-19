@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-
 """
 Starts a Flask web application
 
@@ -39,7 +38,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def teardwon(self):
+def teardown(self):
     """Destroys SQLAlchemy session"""
     storage.close()
 
