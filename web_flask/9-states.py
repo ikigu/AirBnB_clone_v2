@@ -50,21 +50,21 @@ def close(self):
 
 
 @app.route('/states', strict_slashes=False)
-@app.route('/states/<id>', strict_slashes=False)
-def states(id=None):
+def states():
     """Renders a page with all states and their corresponding cities"""
     states = storage.all(State)
 
-    if id is None:
-        return render_template('9-states.html', state=None, states=states)
+    return render_template('9-states.html', state=None, states=states)
 
-    requested_state = None
-    for state in states.values():
+
+@app.route('/states/<id>', strict_slashes=False)
+def single_state(id=None):
+    """Renders a page with all states and their corresponding cities"""
+    for state in storage.all(State).values():
         if state.id == id:
-            requested_state = state
+            return render_template('9-states.html', state=state, states=None)
 
-    return render_template('9-states.html', state=requested_state,
-                           states=None)
+    return render_template('9-states.html', state=None, states=None)
 
 
 if __name__ == '__main__':
