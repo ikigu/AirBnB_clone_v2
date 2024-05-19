@@ -48,10 +48,21 @@ def close(self):
 
 
 @app.route('/states', strict_slashes=False)
-def cities_by_states():
+@app.route('/states/<id>', strict_slashes=False)
+def states(id=None):
     """Renders a page with all states and their corresponding cities"""
     states = storage.all(State)
-    return render_template('8-cities_by_states.html', states=states)
+
+    if id is None:
+        return render_template('9-states.html', state=None, states=states)
+
+    requested_state = None
+    for state in states.values():
+        if state.id == id:
+            requested_state = state
+
+    return render_template('9-states.html', state=requested_state,
+                           states=None)
 
 
 if __name__ == '__main__':
