@@ -31,7 +31,7 @@ app = Flask(__name__)
 
 
 @app.teardown_appcontext
-def teardown(self):
+def close(self):
     """Destroys SQLAlchemy session"""
     storage.close()
 
