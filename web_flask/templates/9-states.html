@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 </head>
 <body>
-
 	{% if state == None and states != None %}
 	<h1>States</h1>
 	<ul>
@@ -14,7 +11,6 @@
 		<li>{{ state.id }}: <b>{{ state.name }}</b></li>
 		{% endfor %}
 	</ul>
-
 	{% elif state != None %}
 	<h1>State: {{ state.name }}</h1>
 	<h3>Cities:</h3>
@@ -23,7 +19,6 @@
 		<li>{{ city.id }}: <b>{{ city.name }}</b></li>
 		{% endfor %}
 	</ul>
-
 	{% else %}
 	<h1>Not found!</h1>
 	{% endif %}
