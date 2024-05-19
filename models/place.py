@@ -31,6 +31,7 @@ class Place(BaseModel, Base):
                                      nullable=False)),
         Column('amenity_id', String(60), ForeignKey(
             'amenities.id'), nullable=False)
+        user = relationship("User", back_populates="places")
     else:
         city_id = ""
         user_id = ""
