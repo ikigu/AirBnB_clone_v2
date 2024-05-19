@@ -23,7 +23,8 @@ Requirements:
               < state.id > : < B > <state.name > </B >
               + UL tag: with the list of City objects linked to the State
               sorted by name (A -> Z)
-                - LI tag: description of one City: < city.id > : < B > <city.name > </B >
+                - LI tag: description of one City:
+                  < city.id > : < B > <city.name > </B >
     - Import this 7-dump to have some data
     - You must use the option strict_slashes =False in your route definition
 """
